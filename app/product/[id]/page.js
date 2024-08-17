@@ -1,6 +1,7 @@
 "use client"
 
 import MainLayout from "@/app/layouts/MainLayout"
+import SimilarProducts from '../../components/SimilarProducts'
 
 export default function Product({ params }) {
 

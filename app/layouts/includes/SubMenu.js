@@ -26,7 +26,10 @@ export default function SubMenu() {
           <ul className="flex items-center tex-[13px] text-[#333333] px-2 h-8">
             {
               menuItems.map(item => (
-                <li className="px-3 hover:underline cursor-pointer">
+                <li
+                  key={item.id}
+                  className="px-3 hover:underline cursor-pointer"
+                >
                   {item.name}
                 </li>
               ))
