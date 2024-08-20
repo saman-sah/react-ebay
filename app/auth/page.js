@@ -1,10 +1,12 @@
 "use client"
 
+import Link from 'next/link'
 import { Auth } from '@supabase/auth-ui-react'
 import { ThemeSupa } from '@supabase/auth-ui-shared'
-import Link from 'next/link'
+// import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
 export default function AuthPage() {
+  // const supabase = createClientComponentClient()
   return (
     <>
       <div
@@ -26,7 +28,13 @@ export default function AuthPage() {
           Login / Register
         </div>
         <div className='max-w-[400] mx-auto px-2'>
-
+          {/* <Auth
+            onlyThirdPartyProviders
+            redirectTo={`${window.location.origin}/auth/callback`}
+            supabaseClient={supabase}
+            providers={['google']}
+            appearance={{ theme: ThemeSupa }}
+          /> */}
         </div>
       </div>
     </>
