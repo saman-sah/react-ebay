@@ -1,5 +1,5 @@
 -- CreateTable
-CREATE TABLE "Address" (
+CREATE TABLE "Addresses" (
     "id" SERIAL NOT NULL,
     "user_id" UUID NOT NULL,
     "name" TEXT NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE "Address" (
     "country" TEXT NOT NULL,
     "created_at" TIMESTAMPTZ(6) DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "Address_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Addresses_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -22,7 +22,7 @@ CREATE TABLE "Orders" (
     "zipcode" TEXT NOT NULL,
     "city" TEXT NOT NULL,
     "country" TEXT NOT NULL,
-    "total" TEXT NOT NULL,
+    "total" INTEGER NOT NULL,
     "created_at" TIMESTAMPTZ(6) DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Orders_pkey" PRIMARY KEY ("id")
@@ -41,7 +41,7 @@ CREATE TABLE "OrderItem" (
 -- CreateTable
 CREATE TABLE "Products" (
     "id" SERIAL NOT NULL,
-    "title" UUID NOT NULL,
+    "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "url" TEXT NOT NULL,
     "price" INTEGER NOT NULL,
@@ -51,13 +51,7 @@ CREATE TABLE "Products" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Address_user_id_key" ON "Address"("user_id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Orders_user_id_key" ON "Orders"("user_id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Products_title_key" ON "Products"("title");
+CREATE UNIQUE INDEX "Addresses_user_id_key" ON "Addresses"("user_id");
 
 -- AddForeignKey
 ALTER TABLE "OrderItem" ADD CONSTRAINT "OrderItem_order_id_fkey" FOREIGN KEY ("order_id") REFERENCES "Orders"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

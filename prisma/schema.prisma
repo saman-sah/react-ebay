@@ -1,9 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,7 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Address {
+model Addresses {
   id         Int       @id @default(autoincrement())
   user_id    String    @unique @db.Uuid
   name       String
@@ -26,7 +23,7 @@ model Address {
 
 model Orders {
   id         Int         @id @default(autoincrement())
-  user_id    String      @unique @db.Uuid
+  user_id    String      @db.Uuid
   stripe_id  String
   name       String
   address    String
@@ -48,11 +45,11 @@ model OrderItem {
 }
 
 model Products {
-  id          Int         @id @default(autoincrement())
-  title       String      @unique @db.Uuid
+  id          Int        @id @default(autoincrement())
+  title       String
   description String
   url         String
   price       Int
-  created_at  DateTime?   @default(now()) @db.Timestamptz(6)
+  created_at  DateTime?  @default(now()) @db.Timestamptz(6)
   orderItem   OrderItem[]
 }
