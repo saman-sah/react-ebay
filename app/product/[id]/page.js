@@ -2,8 +2,12 @@
 
 import MainLayout from "@/app/layouts/MainLayout"
 import SimilarProducts from '../../components/SimilarProducts'
+import { useCart } from "@/app/context/cart"
+import { toast } from "react-toastify"
 
 export default function Product({ params }) {
+
+  const cart = useCart()
 
   const product = {
     id: 1,
@@ -46,8 +50,24 @@ export default function Product({ params }) {
                     }
                   </div>
                 </div>
-                <button className='bg-[#3498c9] text-white py-2 px-20 rounded-full cursor-pointer'>
-                  Add to Cart
+                <button
+                  onClick={() => {
+                    if (cart.isItemAdded) {
+                      cart.removeFromCart(product)
+                      toast.info('Removed from cart', { autoClose: 3000 })
+                    } else {
+                      cart.addToCart(product)
+                      toast.info('Added to cart', { autoClose: 3000 })
+                    }
+                  }}
+                  className={
+                    `
+                      bg-[#3498c9] text-white py-2 px-20 rounded-full cursor-pointer
+                      ${cart.isItemAdded ? 'bg-[#e9a321 hover:bg-[#bf851a]' : 'bg-[#3498C9] hover:bg-[#0054A0]'}
+                    `
+                  }
+                >
+                  {cart.isItemAdded ? 'Remove From Cart' : 'Add to Cart'}
                 </button>
                 <div className='border-b py-1' />
                 <div className='pt-3'>
