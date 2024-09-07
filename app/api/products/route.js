@@ -1,18 +1,12 @@
 import prisma from "@/app/libs/Prisma";
 import { NextResponse } from "next/server";
 
-export async function GET(req, context) {
-
-  const { id } = context.params
+export async function GET() {
   try {
-    const { id } = await context.params
-
-    const product = await prisma.products.findFirst({
-      where: { id: Number(id) }
-    })
+    const products = await prisma.products.findMany()
 
     await prisma.$disconnect();
-    return NextResponse.json(product)
+    return NextResponse.json(products)
   } catch (error) {
     console.log(error);
     await prisma.$disconnect()

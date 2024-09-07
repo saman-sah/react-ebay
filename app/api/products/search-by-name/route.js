@@ -2,17 +2,23 @@ import prisma from "@/app/libs/Prisma";
 import { NextResponse } from "next/server";
 
 export async function GET(req, context) {
-
-  const { id } = context.params
   try {
-    const { id } = await context.params
+    const { name } = context.params
 
-    const product = await prisma.products.findFirst({
-      where: { id: Number(id) }
+    const items = await prisma.products.findMany({
+      take: 5,
+      where: {
+        title: {
+          title: {
+            contains: name,
+            mode: 'insensitive'
+          }
+        }
+      }
     })
 
     await prisma.$disconnect();
-    return NextResponse.json(product)
+    return NextResponse.json(items)
   } catch (error) {
     console.log(error);
     await prisma.$disconnect()
