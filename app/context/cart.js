@@ -91,6 +91,7 @@ const Provider = ({ children }) => {
     addToCart,
     cartTotal,
     clearCart,
+    isItemAdded,
     removeFromCart,
     isItemAddedToCart
   }
