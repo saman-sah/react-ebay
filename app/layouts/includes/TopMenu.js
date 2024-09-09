@@ -13,7 +13,6 @@ export default function TopMenu() {
 
   const [isMenu, setIsMenu] = useState(false)
   const isLoggedIn = () => {
-    console.log('userrrrrrrrrrrrrr', user)
     if (user && user?.id) {
       return (
         <button

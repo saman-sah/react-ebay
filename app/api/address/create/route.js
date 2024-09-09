@@ -13,7 +13,7 @@ export async function POST(req) {
 
     const body = await req.json()
 
-    const res = await prisma.address.create({
+    const res = await prisma.addresses.create({
       data: {
         user_id: user?.id,
         name: body.name,

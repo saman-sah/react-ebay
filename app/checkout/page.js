@@ -79,7 +79,7 @@ export default function Checkout() {
                     type='submit'
                     className='mt-4 bg-blue-600 text-lg w-full text-white font-semibold p-3 rounded-full'
                   >
-                    Conirm and PayFONT-LIGHT
+                    Conirm and Payment
                   </button>
                 </form>
               </div>

@@ -8,9 +8,11 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai"
 import { useUser } from '../context/user'
 import useIsLoading from '../hooks/useIsLoading'
 import useUserAddress from '../hooks/useUserAddress'
+import useCreateAddress from "../hooks/useCreateAddress"
 
 import TextInput from "@/app/components/TextInput"
 import MainLayout from "@/app/layouts/MainLayout"
+import ClientOnly from "@/app/components/ClientOnly"
 
 export default function Address() {
   const router = useRouter()
@@ -26,7 +28,7 @@ export default function Address() {
   const [isUpdatingAddress, setIsUpdatingAddress] = useState(null)
 
   const showError = (type) => {
-    if (Object.entries(error).length > 0 && error.type === type) {
+    if (error && Object.entries(error).length > 0 && error.type === type) {
       return error.message
     }
     return ''
@@ -34,7 +36,7 @@ export default function Address() {
 
   const getAddress = async () => {
     if (user?.id ?? false) {
-      useIsLoading = false
+      useIsLoading(false)
       return
     }
 
@@ -129,17 +131,78 @@ export default function Address() {
             <div className='text-xl text-bold mb-2'>
               Address Details
             </div>
-            <form>
+            <form onSubmit={submit}>
               <div className='mb-4'>
-                <TextInput
-                  placeholder='Name'
-                  string={'Test'}
-                  className='w-full'
-                  error='This is an error'
-                />
+                <ClientOnly>
+                  <TextInput
+                    className='w-full'
+                    string={name}
+                    onUpdate={setName}
+                    placeholder='Name'
+                    error={showError('name')}
+                  />
+                </ClientOnly>
               </div>
-              <button className='w-full mt-6 text-white text-lg font-semibold p-3 rounded bg-blue-600'>
-                Update Address
+              <div className='mb-4'>
+                <ClientOnly>
+                  <TextInput
+                    className='w-full'
+                    string={address}
+                    onUpdate={setAddress}
+                    placeholder='Address'
+                    error={showError('address')}
+                  />
+                </ClientOnly>
+              </div>
+              <div className='mb-4'>
+                <ClientOnly>
+                  <TextInput
+                    className='w-full'
+                    string={zipcode}
+                    onUpdate={setZipcode}
+                    placeholder='Zipcode'
+                    error={showError('zipcode')}
+                  />
+                </ClientOnly>
+              </div>
+              <div className='mb-4'>
+                <ClientOnly>
+                  <TextInput
+                    className='w-full'
+                    string={city}
+                    onUpdate={setCity}
+                    placeholder='City'
+                    error={showError('city')}
+                  />
+                </ClientOnly>
+              </div>
+              <div className='mb-4'>
+                <ClientOnly>
+                  <TextInput
+                    className='w-full'
+                    string={country}
+                    onUpdate={setCountry}
+                    placeholder='Country'
+                    error={showError('country')}
+                  />
+                </ClientOnly>
+              </div>
+              <button
+                type="submit"
+                disabled={isUpdatingAddress}
+                className={`
+                  ${isUpdatingAddress ? 'bg-blue-800' : 'bg-blue-600'}
+                  w-full mt-6 text-white text-lg font-semibold p-3 rounded
+                `}
+              >
+                {
+                  !isUpdatingAddress
+                    ? <div>Update Address</div>
+                    : <div className="flex items-center justify-between gap-2">
+                      <AiOutlineLoading3Quarters className="animate-spin" />
+                      Please Wait...
+                    </div>
+                }
               </button>
             </form>
           </div>

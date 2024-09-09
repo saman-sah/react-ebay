@@ -2,7 +2,7 @@ const useCreateAddress = async (details) => {
 
   let url = details.addressId ? 'update' : 'create'
 
-  const response = await fetch(`/api/address/ ${url}`, {
+  const response = await fetch(`/api/address/create`, {
     method: 'POST',
     headers: { 'Content-type': 'application/json' },
     body: JSON.stringify({
@@ -21,4 +21,4 @@ const useCreateAddress = async (details) => {
 
 }
 
-return useCreateAddress
+export default useCreateAddress
