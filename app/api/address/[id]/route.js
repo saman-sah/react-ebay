@@ -11,7 +11,7 @@ export async function GET() {
 
     if (!user) throw Error()
 
-    const res = await prisma.address.findFirst({
+    const res = await prisma.addresses.findFirst({
       where: { user_id: user.id }
     })
 

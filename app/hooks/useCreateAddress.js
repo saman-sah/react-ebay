@@ -2,7 +2,7 @@ const useCreateAddress = async (details) => {
 
   let url = details.addressId ? 'update' : 'create'
 
-  const response = await fetch(`/api/address/create`, {
+  const response = await fetch(`/api/address/${url}`, {
     method: 'POST',
     headers: { 'Content-type': 'application/json' },
     body: JSON.stringify({

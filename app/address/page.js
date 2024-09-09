@@ -60,7 +60,7 @@ export default function Address() {
     setCity(result.city)
     setAddressId(result.id)
     setZipcode(result.zipcode)
-    setAddress(result.Address)
+    setAddress(result.address)
     setCountry(result.country)
   }
 
