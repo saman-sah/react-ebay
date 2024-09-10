@@ -24,7 +24,7 @@ export default function MainHeader() {
       const result = await response.json()
 
       if (result) {
-        setItems(items)
+        setItems(result)
         setIsSearching(false)
         return
       }
