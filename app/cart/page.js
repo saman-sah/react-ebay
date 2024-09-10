@@ -27,6 +27,7 @@ export default function Cart() {
       alert("You dont have any items in the cart")
       return
     }
+    router.push('/checkout')
   }
 
   return (
@@ -40,12 +41,12 @@ export default function Cart() {
             <ClientOnly>
               <div className='w-[65%]'>
                 {
-                  cart.getCart().map(product => {
+                  cart.getCart().map(product => (
                     <CartItem
                       key={product.id}
                       product={product}
                     />
-                  })
+                  ))
                 }
               </div>
             </ClientOnly>

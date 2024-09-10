@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from 'react'
 
+import Footer from './includes/Footer'
 import SubMenu from './includes/SubMenu'
 import TopMenu from './includes/TopMenu'
+import Loading from '../components/Loading'
 import MainHeader from './includes/MainHeader'
-import Footer from './includes/Footer'
 
 export default function MainLayout({ children }) {
   const [isLoading, setIsLoading] = useState(false)
@@ -25,6 +26,7 @@ export default function MainLayout({ children }) {
         className="min-w-[150px] max-w-[1300px] mx-auto"
       >
         <div>
+          {isLoading ? <Loading /> : <div></div>}
           <TopMenu />
           <MainHeader />
           <SubMenu />

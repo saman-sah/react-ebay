@@ -1,25 +1,32 @@
 "use client"
 
-import ProductComp from './Product'
+import { useState, useEffect } from 'react'
 import { BiLoader } from 'react-icons/bi'
 
+import ProductComp from './Product'
+
 export default function SimilarProducts() {
-  const products = [
-    {
-      id: 1,
-      title: 'Brown Leather Bag',
-      description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum',
-      url: 'https://picsum.photos/id/7',
-      price: 2500
-    },
-    {
-      id: 2,
-      title: 'School Book',
-      description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum',
-      url: 'https://picsum.photos/id/7',
-      price: 2500
+
+  const [products, setProducts] = useState([])
+
+  const getSimilarProducts = async () => {
+    try {
+      const response = await fetch('/api/products/get-random')
+      const result = await response.json()
+      if (result) {
+        setProducts(result)
+        return
+      }
+      setProducts([])
+    } catch (error) {
+      console.log(error);
     }
-  ]
+  }
+
+  useEffect(() => {
+    getSimilarProducts()
+  }, [])
+
   return (
     <>
       <div>

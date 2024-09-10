@@ -1,33 +1,38 @@
 "use client"
 
 import Link from "next/link"
+import { toast } from "react-toastify"
 import { CiDeliveryTruck } from 'react-icons/ci'
+import { useState, useEffect } from "react"
+
+import moment from "moment"
+
+import { useUser } from "../context/user"
 import MainLayout from "../layouts/MainLayout"
+import useIsLoading from "../hooks/useIsLoading"
 
 export default function Order() {
-  const orders = [
-    {
-      id: 1,
-      stripe_id: '123345345',
-      name: 'Saman',
-      address: 'Test',
-      zipcode: 'Test',
-      country: 'test',
-      total: 'test',
-      orderItems: [
-        {
-          id: 1,
-          title: 'Brown Leather Bag',
-          url: 'https://picsum.photos/id/7'
-        },
-        {
-          id: 2,
-          title: 'Brown Leather 222',
-          url: 'https://picsum.photos/id/7'
-        }
-      ]
+  const { user } = useUser()
+  const [orders, setOrders] = useState()
+
+  const getOrders = async () => {
+    try {
+      if (!user && !user.id) return
+      const response = await fetch('/api/orders')
+      const result = await response.json()
+      setOrders(result)
+      useIsLoading(false)
+    } catch (error) {
+      toast.error('Something went wrong!', { autoClose: 3000 })
+      useIsLoading(false)
     }
-  ]
+  }
+
+  useEffect(() => {
+    useIsLoading(true)
+    getOrders()
+  }, [user])
+
   return (
     <>
       <MainLayout>
@@ -44,7 +49,7 @@ export default function Order() {
               <span className='pl-4'>Orders</span>
             </div>
             {
-              orders.length > 0
+              orders?.length > 0
                 ? <div className='flex items-center justify-center'>
                   You have no Order history
                 </div>
@@ -52,7 +57,7 @@ export default function Order() {
             }
 
             {
-              orders.map(order => {
+              orders?.map(order => {
                 <div className='text-sm pl-[50px]'>
                   <div className='border-b py-1'>
                     <div className='pt-2'>
@@ -70,6 +75,17 @@ export default function Order() {
                       {order?.total / 100}
                     </div>
 
+                    <div className='pt-2'>
+                      <span className='font-bold mr-2'>Order Created:</span>
+                      {moment(order?.created_at).calendar()}
+                    </div>
+
+                    <div className='pt-2'>
+                      <span className='font-bold mr-2'>Delivery Time:</span>
+                      {moment(order?.created_at).add(3, 'days').calendar()}
+                    </div>
+
+
                     <div className='flex items-center gap-4'>
                       {
                         order?.orderItems.map(item => (
@@ -78,15 +94,15 @@ export default function Order() {
                             className='flex items-center'
                           >
                             <Link
-                              href='/'
+                              href={`/product/${item.product_id}`}
                               className='py-1 hover:underline text-blue-500 font-bold'
                             >
                               <img
                                 width='120'
-                                src={item.url + '/120'}
+                                src={item.product.url + '/120'}
                                 className='rounded'
                               />
-                              {item.title}
+                              {item.product.title}
                             </Link>
                           </div>
                         ))

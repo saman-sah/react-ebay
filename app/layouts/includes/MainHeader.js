@@ -1,10 +1,41 @@
 "use client"
 
 import Link from "next/link"
-import { BsChevronDown } from 'react-icons/bs'
+import { useState, useEffect } from "react"
+
+import debounce from "debounce"
+import { BiLoaderCircle } from 'react-icons/bi'
 import { AiOutlineSearch } from 'react-icons/ai'
 
+
 export default function MainHeader() {
+  const [items, setItems] = useState([])
+  const [isSearching, setIsSearching] = useState(null)
+
+  const handleSearchName = debounce(async (event) => {
+    if (event.target.value === "") {
+      setItems([])
+      return
+    }
+    setIsSearching(true)
+
+    try {
+      const response = await fetch(`/api/products/search-by-name/${event.target.value}`)
+      const result = await response.json()
+
+      if (result) {
+        setItems(items)
+        setIsSearching(false)
+        return
+      }
+
+      setItems([])
+      setIsSearching(false)
+    } catch (error) {
+      console.log('error', error)
+    }
+  }, 500)
+
   return (
     <>
       <div
@@ -28,10 +59,41 @@ export default function MainHeader() {
                         <AiOutlineSearch size={22} />
                       </button>
                       <input
+                        type="text"
                         className="w-full placeholder-gray-400 text-sm focus:outline-none"
                         placeholder="Search for anything"
-                        type="text"
+                        onChange={handleSearchName}
                       />
+
+                      {isSearching
+                        ? <BiLoaderCircle className="mr-2 animate-spin" size={22} />
+                        : ''
+                      }
+
+                      {
+                        items.length > 0
+                          ? <div className='absolute bg-white max-w-[910px] h-auto w-full left-0 top-12 border p-1'>
+                            {items.map((item) => (
+                              <div className='pr-1' key={item.id}>
+                                <Link
+                                  href={`/product/${item?.id}`}
+                                  className='flex items-center justify-between w-full cursor-pointer hover:bg-gray-200 p-1 px-2'
+                                >
+                                  <div className='flex items-center'>
+                                    <img
+                                      src={item.url + '/40'}
+                                      width='40'
+                                      className='rounded-md'
+                                    />
+                                    <div className='truncate ml-2'>{item?.title}</div>
+                                  </div>
+                                  <div className='truncate'>${(item?.price / 100).toFixed(2)}</div>
+                                </Link>
+                              </div>
+                            ))}
+                          </div>
+                          : null
+                      }
                     </div>
                     <button className="flex items-center bg-blue-600 text-sm font-semibold text-white p-[11px] ml-2 px-14">
                       Search
