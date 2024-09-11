@@ -1,16 +1,33 @@
 "use client"
 
+import { toast } from 'react-toastify'
+import { useState, useEffect } from 'react'
+
 import MainLayout from "../layouts/MainLayout"
 import CheckoutItem from '../components/CheckoutItem'
+import useIsLoading from "../hooks/useIsLoading"
 
 export default function Checkout() {
-  const product = {
-    id: 1,
-    title: 'Brown Leather Bag',
-    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum',
-    url: 'https://picsum.photos/id/7',
-    price: 2500
+  const [products, setProducts] = useState(null)
+
+  const getOrderedProducts = async () => {
+    try {
+      const response = await fetch(`/api/products`)
+      const result = await response.json()
+
+      setProducts(result)
+    } catch (error) {
+      toast.error('Something went wrong!', { autoClose: 3000 })
+    } finally {
+      useIsLoading(false)
+    }
   }
+
+  useEffect(() => {
+    useIsLoading(true)
+    getOrderedProducts()
+  }, [])
+
   return (
     <>
       <MainLayout>
