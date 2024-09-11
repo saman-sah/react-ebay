@@ -1,10 +1,10 @@
 "use client"
 
 import { toast } from "react-toastify"
+
 import { useCart } from "../context/cart"
 
 export default function CartItem({ product }) {
-  console.log('producttttttttt', product);
   const cart = useCart()
 
   const removeItemFromCart = () => {

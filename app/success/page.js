@@ -1,8 +1,9 @@
 "use client"
 
-import { AiOutlineCheckCircle } from "react-icons/ai"
-import MainLayout from "../layouts/MainLayout"
 import Link from "next/link"
+import { AiOutlineCheckCircle } from "react-icons/ai"
+
+import MainLayout from "../layouts/MainLayout"
 
 export default function Success() {
   return (

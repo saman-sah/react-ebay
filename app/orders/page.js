@@ -1,11 +1,11 @@
 "use client"
 
+import moment from "moment"
+
 import Link from "next/link"
 import { toast } from "react-toastify"
 import { CiDeliveryTruck } from 'react-icons/ci'
 import { useState, useEffect } from "react"
-
-import moment from "moment"
 
 import { useUser } from "../context/user"
 import MainLayout from "../layouts/MainLayout"

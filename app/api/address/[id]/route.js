@@ -1,7 +1,8 @@
 import prisma from "@/app/libs/Prisma";
-import { NextResponse } from "next/server";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+
 import { cookies } from "next/headers"
+import { NextResponse } from "next/server";
 
 export async function GET() {
   const supabase = createServerComponentClient({ cookies })

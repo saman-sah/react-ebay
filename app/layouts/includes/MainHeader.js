@@ -1,9 +1,9 @@
 "use client"
 
-import Link from "next/link"
-import { useState, useEffect } from "react"
-
 import debounce from "debounce"
+
+import Link from "next/link"
+import { useState } from "react"
 import { BiLoaderCircle } from 'react-icons/bi'
 import { AiOutlineSearch } from 'react-icons/ai'
 

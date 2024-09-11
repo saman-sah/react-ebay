@@ -1,12 +1,13 @@
 'use client'
 
 import Link from "next/link";
-import { BsChevronDown } from 'react-icons/bs'
-import { AiOutlineShoppingCart } from 'react-icons/ai'
-import { useUser } from "../../context/user"
-import { useEffect, useState } from "react";
-import { useCart } from "../../context/cart";
 import { useRouter } from "next/navigation";
+import { BsChevronDown } from 'react-icons/bs'
+import { useEffect, useState } from "react";
+import { AiOutlineShoppingCart } from 'react-icons/ai'
+
+import { useUser } from "../../context/user"
+import { useCart } from "../../context/cart";
 import ClientOnly from "../../components/ClientOnly";
 
 export default function TopMenu() {

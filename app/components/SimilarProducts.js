@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useEffect } from 'react'
 import { BiLoader } from 'react-icons/bi'
+import { useState, useEffect } from 'react'
 
 import ProductComp from './Product'
 

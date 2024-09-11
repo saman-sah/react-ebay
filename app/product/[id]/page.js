@@ -6,8 +6,8 @@ import { useState, useEffect } from 'react'
 
 import { useCart } from "@/app/context/cart"
 import MainLayout from "@/app/layouts/MainLayout"
-import SimilarProducts from '../../components/SimilarProducts'
 import useIsLoading from "@/app/hooks/useIsLoading"
+import SimilarProducts from '../../components/SimilarProducts'
 
 export default function Product({ params }) {
 
