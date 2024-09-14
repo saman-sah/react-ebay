@@ -7,13 +7,15 @@ import MainLayout from './layouts/MainLayout'
 import useIsLoading from './hooks/useIsLoading'
 import CarouselComp from './components/CarouselComp'
 
+import type { Product as ProductType } from "./types/Product"
+
 export default function Home() {
-  const [products, setProducts] = useState([])
+  const [products, setProducts] = useState<ProductType[]>([])
 
   const getProducts = async () => {
     useIsLoading(true)
     const response = await fetch('/api/products')
-    const result = await response.json()
+    const result: ProductType[] = await response.json()
 
     setProducts(result)
     useIsLoading(false)
