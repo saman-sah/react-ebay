@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 import Product from './components/Product'
 import MainLayout from './layouts/MainLayout'
 import useIsLoading from './hooks/useIsLoading'
-import CarouselComp from '@/app/components/CarouselComp'
+import CarouselComp from './components/CarouselComp'
 
 export default function Home() {
   const [products, setProducts] = useState([])

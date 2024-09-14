@@ -10,9 +10,9 @@ import useIsLoading from '../hooks/useIsLoading'
 import useUserAddress from '../hooks/useUserAddress'
 import useCreateAddress from "../hooks/useCreateAddress"
 
-import TextInput from "@/app/components/TextInput"
-import MainLayout from "@/app/layouts/MainLayout"
-import ClientOnly from "@/app/components/ClientOnly"
+import TextInput from "../components/TextInput"
+import MainLayout from "../layouts/MainLayout"
+import ClientOnly from "../components/ClientOnly"
 
 export default function Address() {
   const router = useRouter()

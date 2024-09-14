@@ -3,8 +3,15 @@
 import { toast } from "react-toastify"
 
 import { useCart } from "../context/cart"
+import type { Product } from "../types/Product"
 
-export default function CartItem({ product }) {
+
+
+interface CartItemProps {
+  product: Product;
+}
+
+export default function CartItem({ product }: CartItemProps) {
   const cart = useCart()
 
   const removeItemFromCart = () => {
