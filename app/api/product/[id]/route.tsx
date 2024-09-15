@@ -2,13 +2,21 @@ import prisma from "../../../libs/Prisma";
 
 import { NextResponse } from "next/server";
 
-export async function GET(req, context) {
+import type { Product as ProductType } from "../../../types"
+
+interface ContextParams {
+  params: {
+    id: string
+  }
+}
+
+export async function GET(req: Request, context: ContextParams): Promise<NextResponse> {
 
   const { id } = context.params
   try {
-    const { id } = await context.params
+    const { id } = context.params
 
-    const product = await prisma.products.findFirst({
+    const product: ProductType | null = await prisma.products.findFirst({
       where: { id: Number(id) }
     })
 

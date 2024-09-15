@@ -2,7 +2,13 @@
 
 import Link from "next/link"
 
-export default function Product({ product }) {
+import type { Product } from "../types"
+
+interface ProductProps {
+  product: Product
+}
+
+export default function Product({ product }: ProductProps) {
   return (
     <>
       <Link

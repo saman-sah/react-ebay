@@ -1,10 +1,12 @@
-import prisma from "../../../libs/Prisma";
+import prisma from "../../libs/Prisma";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers"
 
-export async function POST(req) {
+import { Orders as OrderType } from "../../types"
+
+export async function GET(): Promise<NextResponse> {
   const supabase = createServerComponentClient({ cookies })
 
   try {
@@ -12,21 +14,20 @@ export async function POST(req) {
 
     if (!user) throw Error()
 
-    const body = await req.json()
-
-    const res = await prisma.addresses.create({
-      data: {
-        user_id: user?.id,
-        name: body.name,
-        address: body.address,
-        zipcode: body.zipcode,
-        city: body.city,
-        country: body.country
+    const orders: OrderType[] = await prisma.orders.findMany({
+      where: { user_id: user.id },
+      orderBy: { id: 'desc' },
+      include: {
+        orderItem: {
+          include: {
+            product: true
+          }
+        }
       }
     })
 
     await prisma.$disconnect();
-    return NextResponse.json(res)
+    return NextResponse.json(orders)
   } catch (error) {
     console.log(error);
     await prisma.$disconnect()

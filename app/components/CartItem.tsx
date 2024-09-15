@@ -3,9 +3,8 @@
 import { toast } from "react-toastify"
 
 import { useCart } from "../context/cart"
-import type { Product } from "../types/Product"
 
-
+import type { Product } from "../types"
 
 interface CartItemProps {
   product: Product;

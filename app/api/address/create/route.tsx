@@ -4,7 +4,9 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers"
 
-export async function GET() {
+import { AddressType } from "../../../types"
+
+export async function POST(req: Request): Promise<NextResponse> {
   const supabase = createServerComponentClient({ cookies })
 
   try {
@@ -12,20 +14,21 @@ export async function GET() {
 
     if (!user) throw Error()
 
-    const orders = await prisma.orders.findMany({
-      where: { user_id: user.id },
-      orderBy: { id: 'desc' },
-      include: {
-        orderItem: {
-          include: {
-            product: true
-          }
-        }
+    const body: AddressType = await req.json()
+
+    const res: AddressType = await prisma.addresses.create({
+      data: {
+        user_id: user?.id,
+        name: body.name,
+        address: body.address,
+        zipcode: body.zipcode,
+        city: body.city,
+        country: body.country
       }
     })
 
     await prisma.$disconnect();
-    return NextResponse.json(orders)
+    return NextResponse.json(res)
   } catch (error) {
     console.log(error);
     await prisma.$disconnect()

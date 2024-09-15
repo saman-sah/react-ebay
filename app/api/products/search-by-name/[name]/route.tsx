@@ -1,13 +1,21 @@
-import prisma from "../../../libs/Prisma";
+import prisma from "../../../../libs/Prisma";
 
 import { NextResponse } from "next/server";
 
-export async function GET(req, context) {
+import type { Product } from "../../../../types";
+
+interface ContextParams {
+  params: {
+    name: string
+  }
+}
+
+export async function GET(req: Request, context: ContextParams) {
   try {
     console.log('context.params', context.params)
     const { name } = context.params
 
-    const items = await prisma.products.findMany({
+    const items: Product[] = await prisma.products.findMany({
       take: 5,
       where: {
         title: {

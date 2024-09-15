@@ -7,7 +7,7 @@ import MainLayout from './layouts/MainLayout'
 import useIsLoading from './hooks/useIsLoading'
 import CarouselComp from './components/CarouselComp'
 
-import type { Product as ProductType } from "./types/Product"
+import type { Product as ProductType } from "./types"
 
 export default function Home() {
   const [products, setProducts] = useState<ProductType[]>([])

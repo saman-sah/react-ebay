@@ -1,6 +1,8 @@
 "use client"
 
-export default function TextInput({ string, placeholder, error, onUpdate }) {
+import type { TextInputProps } from '../types'
+
+export default function TextInput({ string, placeholder, error, onUpdate }: TextInputProps) {
   return (
     <>
       <input

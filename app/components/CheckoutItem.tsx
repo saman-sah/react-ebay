@@ -2,7 +2,13 @@
 
 import { usePathname } from "next/navigation"
 
-export default function CheckoutItem({ product }) {
+import type { Product } from "../types"
+
+interface CheckoutItemProps {
+  product: Product;
+}
+
+export default function CheckoutItem({ product }: CheckoutItemProps) {
   const pathname = usePathname()
   return (
     <>

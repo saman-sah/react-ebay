@@ -2,9 +2,10 @@ import Stripe from 'stripe';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 
 import { NextResponse } from "next/server";
+import prisma from "../../libs/Prisma";
 import { cookies } from 'next/headers'
 
-export async function POST(req) {
+export async function POST(req: Request): Promise<NextResponse> {
   const supabase = createServerComponentClient({ cookies })
 
   try {

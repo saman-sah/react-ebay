@@ -2,13 +2,15 @@ import prisma from "../../../libs/Prisma";
 
 import { NextResponse } from "next/server";
 
-export async function GET() {
+import { Product } from "../../../types";
+
+export async function GET(): Promise<NextResponse> {
   try {
 
-    const productsCount = await prisma.products.count()
-    const skip = Math.floor(Math.random() * productsCount)
+    const productsCount: number = await prisma.products.count()
+    const skip: number = Math.floor(Math.random() * productsCount)
 
-    const products = await prisma.products.findMany({
+    const products: Product[] = await prisma.products.findMany({
       take: 5,
       skip: skip,
       orderBy: { id: 'asc' }

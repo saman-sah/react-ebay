@@ -5,14 +5,16 @@ import { useState, useEffect } from 'react'
 
 import ProductComp from './Product'
 
+import type { Product } from "../types"
+
 export default function SimilarProducts() {
 
-  const [products, setProducts] = useState([])
+  const [products, setProducts] = useState<Product[]>([])
 
   const getSimilarProducts = async () => {
     try {
       const response = await fetch('/api/products/get-random')
-      const result = await response.json()
+      const result: Product[] = await response.json()
       if (result) {
         setProducts(result)
         return

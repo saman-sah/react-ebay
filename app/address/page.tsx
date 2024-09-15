@@ -2,7 +2,7 @@
 
 import { toast } from "react-toastify"
 import { useRouter } from 'next/navigation'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, FormEvent } from 'react'
 import { AiOutlineLoading3Quarters } from "react-icons/ai"
 
 import { useUser } from '../context/user'
@@ -14,20 +14,22 @@ import TextInput from "../components/TextInput"
 import MainLayout from "../layouts/MainLayout"
 import ClientOnly from "../components/ClientOnly"
 
+import { AddressType, Error } from "../types"
+
 export default function Address() {
   const router = useRouter()
   const { user } = useUser()
 
-  const [city, setCity] = useState(null)
-  const [name, setName] = useState(null)
-  const [error, setError] = useState(null)
-  const [country, setCountry] = useState(null)
-  const [address, setAddress] = useState(null)
-  const [zipcode, setZipcode] = useState(null)
-  const [addressId, setAddressId] = useState(null)
-  const [isUpdatingAddress, setIsUpdatingAddress] = useState(null)
+  const [city, setCity] = useState<string | null>(null)
+  const [name, setName] = useState<string | null>(null)
+  const [error, setError] = useState<Error | null>(null)
+  const [country, setCountry] = useState<string | null>(null)
+  const [address, setAddress] = useState<string | null>(null)
+  const [zipcode, setZipcode] = useState<string | null>(null)
+  const [id, setAddressId] = useState<number | null>(null)
+  const [isUpdatingAddress, setIsUpdatingAddress] = useState<boolean>(false)
 
-  const showError = (type) => {
+  const showError = (type: string) => {
     if (error && Object.entries(error).length > 0 && error.type === type) {
       return error.message
     }
@@ -40,7 +42,7 @@ export default function Address() {
       return
     }
 
-    const response = await useUserAddress()
+    const response: AddressType | null = await useUserAddress()
 
     if (response) {
       setTheCurrentAddress(response)
@@ -55,7 +57,7 @@ export default function Address() {
     getAddress()
   }, [user])
 
-  const setTheCurrentAddress = (result) => {
+  const setTheCurrentAddress = (result: AddressType) => {
     setName(result.name)
     setCity(result.city)
     setAddressId(result.id)
@@ -65,7 +67,7 @@ export default function Address() {
   }
 
   const validate = () => {
-    setError({})
+    setError(null)
     let isError = false
 
     if (!name) {
@@ -87,12 +89,12 @@ export default function Address() {
     return isError
   }
 
-  const submit = async (event) => {
+  const submit = async (event: FormEvent) => {
     event.preventDefault();
     let isError = validate()
 
     if (isError) {
-      toast.error(error.message, { autoClose: 3000 })
+      toast.error(error?.message, { autoClose: 3000 })
       return
     }
 
@@ -100,7 +102,7 @@ export default function Address() {
       setIsUpdatingAddress(true)
 
       const response = await useCreateAddress({
-        addressId,
+        id,
         name,
         address,
         zipcode,

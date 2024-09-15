@@ -2,9 +2,11 @@ import prisma from "../../libs/Prisma";
 
 import { NextResponse } from "next/server";
 
-export async function GET() {
+import { Product } from "../../types";
+
+export async function GET(): Promise<NextResponse> {
   try {
-    const products = await prisma.products.findMany()
+    const products: Product[] = await prisma.products.findMany()
 
     await prisma.$disconnect();
     return NextResponse.json(products)

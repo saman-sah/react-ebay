@@ -4,7 +4,9 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers"
 import { NextResponse } from "next/server";
 
-export async function GET() {
+import type { AddressType } from "../../../types"
+
+export async function GET(): Promise<NextResponse> {
   const supabase = createServerComponentClient({ cookies })
 
   try {
@@ -12,7 +14,7 @@ export async function GET() {
 
     if (!user) throw Error()
 
-    const res = await prisma.addresses.findFirst({
+    const res: AddressType | null = await prisma.addresses.findFirst({
       where: { user_id: user.id }
     })
 
