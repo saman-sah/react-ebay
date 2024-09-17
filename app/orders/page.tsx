@@ -90,7 +90,7 @@ export default function Order() {
 
                       <div className='flex items-center gap-4'>
                         {
-                          order?.orderItems.map((item: OrderItem) => (
+                          order?.orderItem.map((item: OrderItem) => (
                             <div
                               key={item.id}
                               className='flex items-center'
@@ -151,7 +151,7 @@ export default function Order() {
                       </div>
 
                       <div className='flex items-center gap-4'>
-                        {order?.orderItems.map(item => (
+                        {order?.orderItem.map(item => (
                           <div key={item.id} className='flex items-center'>
                             <Link
                               href={`/product/${item.product_id}`}

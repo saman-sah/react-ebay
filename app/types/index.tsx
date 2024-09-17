@@ -49,8 +49,8 @@ export interface Order {
   city: string
   country: string
   total: number
-  created_at: Date | null;
-  orderItems: OrderItem[]
+  created_at: Date | null
+  orderItem: OrderItem[]
 }
 
 export interface CartContextType {

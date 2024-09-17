@@ -4,7 +4,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers"
 
-import { Order as OrderType } from "../../types"
+import { Order } from "../../types"
 
 export async function GET(): Promise<NextResponse> {
   const supabase = createServerComponentClient({ cookies })
@@ -14,7 +14,7 @@ export async function GET(): Promise<NextResponse> {
 
     if (!user) throw Error()
 
-    const orders: OrderType[] = await prisma.orders.findMany({
+    const orders: Order[] = await prisma.orders.findMany({
       where: { user_id: user.id },
       orderBy: { id: 'desc' },
       include: {
