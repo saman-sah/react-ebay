@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 export interface AddressType {
   id: number | null;
   user_id?: string,
@@ -38,7 +39,7 @@ export interface OrderItem {
   product: Product
 }
 
-export interface Orders {
+export interface Order {
   id?: number
   user_id: string
   stripe_id: string
@@ -49,5 +50,48 @@ export interface Orders {
   country: string
   total: number
   created_at: Date | null;
-  orderItem: OrderItem[]
+  orderItems: OrderItem[]
+}
+
+export interface CartContextType {
+  getCart: () => Product[]
+  cartCount: () => number
+  addToCart: (prod: Product) => void
+  removeFromCart: (prod: Product) => void
+  cartTotal: () => number
+  clearCart: () => void
+  isItemAddedToCart: (prod: Product) => void
+  isItemAdded: boolean
+}
+
+export interface ReactNodeProps {
+  children: ReactNode
+}
+
+export interface UserContextType {
+  getCurrentSession: () => Promise<any>
+  getCurrentUser: () => Promise<void>
+  signOut: () => Promise<void>
+  clearUser: () => void
+  user: any | null
+  id: string | null
+  email: string | null
+  name: string | null
+  picture: string
+}
+
+export interface MenuItem {
+  id: number
+  name: string
+}
+
+export interface MetaDataType {
+  title: string,
+  description: string
+}
+
+export interface ContextParams {
+  params: {
+    id: string
+  }
 }

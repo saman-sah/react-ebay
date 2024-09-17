@@ -4,22 +4,24 @@
 import { toast } from "react-toastify"
 import { useState, useEffect } from 'react'
 
-import { useCart } from "@/app/context/cart"
-import MainLayout from "@/app/layouts/MainLayout"
-import useIsLoading from "@/app/hooks/useIsLoading"
+import { useCart } from "../../context/cart"
+import MainLayout from "../../layouts/MainLayout"
+import useIsLoading from "../../hooks/useIsLoading"
 import SimilarProducts from '../../components/SimilarProducts'
 
-export default function Product({ params }) {
+import { ContextParams, Product as ProductType, CartContextType } from '../../types'
 
-  const cart = useCart()
-  const [product, setProduct] = useState({})
+export default function Product({ params }: ContextParams) {
 
-  const getProduct = async () => {
+  const cart: CartContextType = useCart()
+  const [product, setProduct] = useState<ProductType>()
+
+  const getProduct = async (): Promise<void> => {
     useIsLoading(true)
-    setProduct({})
+    setProduct(undefined)
 
     const response = await fetch(`/api/product/${params.id}`)
-    const result = await response.json()
+    const result: ProductType = await response.json()
     setProduct(result)
     cart.isItemAddedToCart(result)
     useIsLoading(false)
@@ -65,6 +67,10 @@ export default function Product({ params }) {
                 </div>
                 <button
                   onClick={() => {
+                    if (!product) {
+                      toast.error('Product not loaded', { autoClose: 3000 })
+                      return
+                    }
                     if (cart.isItemAdded) {
                       cart.removeFromCart(product)
                       toast.info('Removed from cart', { autoClose: 3000 })

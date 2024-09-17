@@ -10,11 +10,13 @@ import { useUser } from "../../context/user"
 import { useCart } from "../../context/cart";
 import ClientOnly from "../../components/ClientOnly";
 
+import { UserContextType, CartContextType } from "../../types";
+
 export default function TopMenu() {
   const router = useRouter()
-  const user = useUser();
-  const cart = useCart();
-  const [isMenu, setIsMenu] = useState(false)
+  const user: UserContextType = useUser()
+  const cart: CartContextType = useCart()
+  const [isMenu, setIsMenu] = useState<boolean>(false)
 
   useEffect(() => { cart.cartCount() }, [cart])
 
@@ -54,9 +56,9 @@ export default function TopMenu() {
               <div
                 id="AuthDropdown"
                 className={`
-                                    absolute bg-white w-[200px] text-[#333333] z-40 top-[20px] left-0 border shadow-lg
-                                    ${isMenu ? 'visible' : 'hidden'}
-                                `}
+                  absolute bg-white w-[200px] text-[#333333] z-40 top-[20px] left-0 border shadow-lg
+                  ${isMenu ? 'visible' : 'hidden'}
+                `}
               >
                 <div>
                   <div className="flex items-center justify-start gap-1 p-3">

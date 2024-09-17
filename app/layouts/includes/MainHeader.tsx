@@ -3,16 +3,17 @@
 import debounce from "debounce"
 
 import Link from "next/link"
-import { useState } from "react"
+import { useState, ChangeEvent } from "react"
 import { BiLoaderCircle } from 'react-icons/bi'
 import { AiOutlineSearch } from 'react-icons/ai'
 
+import { Product } from "../../types"
 
 export default function MainHeader() {
-  const [items, setItems] = useState([])
-  const [isSearching, setIsSearching] = useState(null)
+  const [items, setItems] = useState<Product[]>([])
+  const [isSearching, setIsSearching] = useState<boolean>(false)
 
-  const handleSearchName = debounce(async (event) => {
+  const handleSearchName = debounce(async (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.value === "") {
       setItems([])
       return
@@ -21,7 +22,7 @@ export default function MainHeader() {
 
     try {
       const response = await fetch(`/api/products/search-by-name/${event.target.value}`)
-      const result = await response.json()
+      const result: Product[] = await response.json()
 
       if (result) {
         setItems(result)

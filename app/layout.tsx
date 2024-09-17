@@ -5,12 +5,14 @@ import "./globals.css";
 import UserProvider from './context/user'
 import CartProvider from './context/cart'
 
-export const metadata = {
+import { ReactNodeProps, MetaDataType } from './types'
+
+export const metadata: MetaDataType = {
   title: "Ebay App",
   description: "Ebay clone",
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children }: ReactNodeProps) {
   return (
     <html lang="en">
       <body>

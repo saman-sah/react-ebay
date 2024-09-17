@@ -1,8 +1,10 @@
 "use client"
 
+import { MenuItem } from '../../types'
+
 export default function SubMenu() {
 
-  const menuItems = [
+  const menuItems: MenuItem[] = [
     { id: 1, name: 'Home' },
     { id: 2, name: 'Saved' },
     { id: 3, name: 'Electronics' },

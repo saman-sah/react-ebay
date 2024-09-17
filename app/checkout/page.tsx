@@ -7,13 +7,15 @@ import MainLayout from "../layouts/MainLayout"
 import CheckoutItem from '../components/CheckoutItem'
 import useIsLoading from "../hooks/useIsLoading"
 
-export default function Checkout() {
-  const [products, setProducts] = useState(null)
+import type { Product } from '../types'
 
-  const getOrderedProducts = async () => {
+export default function Checkout() {
+  const [products, setProducts] = useState<Product[]>([])
+
+  const getOrderedProducts = async (): Promise<void> => {
     try {
       const response = await fetch(`/api/products`)
-      const result = await response.json()
+      const result: Product[] = await response.json()
 
       setProducts(result)
     } catch (error) {
@@ -58,10 +60,14 @@ export default function Checkout() {
                 id='Items'
                 className='bg-white rounded-lg mt-4'
               >
-                <CheckoutItem
-                  key={product.id}
-                  product={product}
-                />
+                {
+                  products.map(prod => (
+                    <CheckoutItem
+                      key={prod.id}
+                      product={prod}
+                    />
+                  ))
+                }
               </div>
             </div>
             <div

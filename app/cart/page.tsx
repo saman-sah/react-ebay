@@ -11,8 +11,15 @@ import ClientOnly from "../components/ClientOnly"
 import useIsLoading from '../hooks/useIsLoading'
 import SimilarProducts from "../components/SimilarProducts"
 
+import type { Product } from '../types'
+
+interface CartContext {
+  getCart: () => Product[],
+  cartTotal: () => number
+}
+
 export default function Cart() {
-  const cart = useCart()
+  const cart: CartContext = useCart()
   const router = useRouter()
 
   useEffect(() => {
@@ -22,8 +29,8 @@ export default function Cart() {
     useIsLoading(false)
   }, [cart])
 
-  const goToCheckout = () => {
-    if (!Cart.cartTotal()) {
+  const goToCheckout = (): void => {
+    if (!cart.cartTotal()) {
       alert("You dont have any items in the cart")
       return
     }

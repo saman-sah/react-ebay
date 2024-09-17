@@ -2,13 +2,7 @@ import prisma from "../../../libs/Prisma";
 
 import { NextResponse } from "next/server";
 
-import type { Product as ProductType } from "../../../types"
-
-interface ContextParams {
-  params: {
-    id: string
-  }
-}
+import type { Product as ProductType, ContextParams } from "../../../types"
 
 export async function GET(req: Request, context: ContextParams): Promise<NextResponse> {
 

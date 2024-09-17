@@ -1,12 +1,13 @@
-const useCreateAddress = async (details) => {
+import type { AddressType } from '../types'
+const useCreateAddress = async (details: AddressType): Promise<AddressType> => {
 
-  let url = details.addressId ? 'update' : 'create'
+  let url: string = details.id ? 'update' : 'create'
 
   const response = await fetch(`/api/address/${url}`, {
     method: 'POST',
     headers: { 'Content-type': 'application/json' },
     body: JSON.stringify({
-      addressId: details.addressId,
+      id: details.id,
       city: details.city,
       country: details.country,
       zipcode: details.zipcode,
@@ -15,7 +16,7 @@ const useCreateAddress = async (details) => {
     })
   })
 
-  const data = await response.json()
+  const data: AddressType = await response.json()
 
   return data
 

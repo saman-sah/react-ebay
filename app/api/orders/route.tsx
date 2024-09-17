@@ -4,7 +4,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers"
 
-import { Orders as OrderType } from "../../types"
+import { Order as OrderType } from "../../types"
 
 export async function GET(): Promise<NextResponse> {
   const supabase = createServerComponentClient({ cookies })

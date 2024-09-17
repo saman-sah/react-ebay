@@ -7,13 +7,14 @@ import SubMenu from './includes/SubMenu'
 import TopMenu from './includes/TopMenu'
 import Loading from '../components/Loading'
 import MainHeader from './includes/MainHeader'
+import { ReactNodeProps } from '../types'
 
-export default function MainLayout({ children }) {
-  const [isLoading, setIsLoading] = useState(false)
+export default function MainLayout({ children }: ReactNodeProps) {
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   useEffect(() => {
-    window.addEventListener('storage', function () {
-      let res = localStorage.getItem('isLoading')
+    window.addEventListener('storage', function (): void {
+      let res: string | null = localStorage.getItem('isLoading')
       res === 'false' ? setIsLoading(false) : setIsLoading(true)
     })
   }, [])

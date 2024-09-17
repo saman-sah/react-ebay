@@ -5,8 +5,7 @@ const useUserAddress = async (): Promise<AddressType | null> => {
   let response = await fetch('api/address/get')
 
   if (response) {
-    let data = await response.json()
-    if (data) address = data as AddressType
+    address = await response.json()
   }
 
   return address
